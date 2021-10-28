@@ -1,0 +1,7 @@
+Flask==1.0.2
+flask-restx==0.2.0
+requests==2.22.0
+simplejson==3.16.0
+python-jose[cryptography]==3.1.0
+Werkzeug==2.0.1
+cachecontrol[filecache]==0.12.6
