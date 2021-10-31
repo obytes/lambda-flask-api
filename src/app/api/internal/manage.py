@@ -18,4 +18,4 @@ class HealthCheck(Resource):
         """
         Useful to prevent cold start, should be called periodically by another lambda
         """
-        return {"status": "I'm sexy and i know it"}, 200
+        return {"status": "I'm sexy and I know It"}, 200
