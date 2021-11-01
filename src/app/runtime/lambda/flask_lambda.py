@@ -2,6 +2,8 @@
 
 import base64
 import sys
+
+from app.api.conf.settings import AWS_API_GW_STAGE_NAME
 from .warmer import warmer
 
 try:
@@ -13,6 +15,12 @@ from flask import Flask
 from io import BytesIO
 
 from werkzeug._internal import _to_bytes
+
+
+def strip_api_gw_stage_name(path: str) -> str:
+    if path.startswith(f"/{AWS_API_GW_STAGE_NAME}"):
+        return path[len(f"/{AWS_API_GW_STAGE_NAME}"):]
+    return path
 
 
 def adapt(event):
@@ -37,7 +45,7 @@ def adapt(event):
 
     # Construct HTTP
     environ['REQUEST_METHOD'] = http['method']
-    environ['PATH_INFO'] = http['path']
+    environ['PATH_INFO'] = strip_api_gw_stage_name(http['path'])
     environ['SERVER_PROTOCOL'] = http['protocol']
     environ['REMOTE_ADDR'] = http['sourceIp']
     environ['HOST'] = '%(HTTP_HOST)s:%(HTTP_X_FORWARDED_PORT)s' % environ

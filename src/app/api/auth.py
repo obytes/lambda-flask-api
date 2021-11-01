@@ -6,7 +6,7 @@ from cachecontrol.caches import FileCache
 from jose import jwt, jws, JWTError
 from jose.utils import base64url_decode
 
-from app.api.conf import Conf
+from app.api.conf import settings
 
 
 def search_for_key(token, keys):
@@ -26,7 +26,7 @@ def get_public_key(token):
     we can take advantage of caching to reduce latency and the potential for network errors.
     """
     sess = CacheControl(requests.Session(), cache=FileCache('/tmp/jwks-cache'))
-    request = sess.get(Conf.JWT_ISSUER_JWKS_URI)
+    request = sess.get(settings.JWT_ISSUER_JWKS_URI)
     ks = request.json()
     keys = []
     for k, v in ks.items():
@@ -77,7 +77,7 @@ def decode(token, verify_expiration=True, authorized_audiences=None):
 def verify(token):
     key = get_public_key(token)
     if valid_signature(token, key):
-        authorized_audiences = Conf.JWT_AUTHORIZED_AUDIENCES
+        authorized_audiences = settings.JWT_AUTHORIZED_AUDIENCES
         return decode(
             token,
             verify_expiration=True,

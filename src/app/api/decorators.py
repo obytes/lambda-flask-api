@@ -3,21 +3,21 @@ from typing import List
 
 from flask import g, request
 
-from app.api.conf import Conf
+from app.api.conf import settings
 from app.api.exceptions import LambdaAuthorizationError
 from app.api.auth import decode_jwt_token
 
 
 def get_claims():
     g.access_token = request.headers.get('Authorization').split()[1]
-    if Conf.RUNTIME == 'LAMBDA':
+    if settings.RUNTIME == 'LAMBDA':
         g.claims = request.environ['AUTHORIZER']['jwt']['claims']
         g.username = g.claims['sub']
-        g.groups = g.claims.get(Conf.JWT_AUTHORIZATION_GROUPS_ATTR_NAME, "[]").strip("[]").split()
-    elif Conf.RUNTIME == 'CONTAINERIZED':
+        g.groups = g.claims.get(settings.JWT_AUTHORIZATION_GROUPS_ATTR_NAME, "[]").strip("[]").split()
+    elif settings.RUNTIME == 'CONTAINERIZED':
         g.claims = decode_jwt_token(g.access_token)
         g.username = g.claims['sub']
-        g.groups = g.claims.get(Conf.JWT_AUTHORIZATION_GROUPS_ATTR_NAME, [])
+        g.groups = g.claims.get(settings.JWT_AUTHORIZATION_GROUPS_ATTR_NAME, [])
     else:
         raise Exception("No runtime specified, Please set RUNTIME environment variable!")
 

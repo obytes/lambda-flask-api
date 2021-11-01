@@ -21,6 +21,7 @@ def has_no_empty_params(rule):
 @admin_ns.route('/endpoints')
 class ListEndpoints(Resource):
 
+    @admin_ns.doc(security=[{'oauth2': []}])
     @auth(allowed_groups=['ADMINS'])
     def get(self):
         """

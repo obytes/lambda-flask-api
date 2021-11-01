@@ -15,6 +15,7 @@ logger = logging.getLogger(__name__)
 @users_ns.route('/whoami')
 class WhoAmI(Resource):
 
+    @users_ns.doc(security=[{'oauth2': []}])
     @auth(allowed_groups=['USERS', 'ADMINS'])  # OR Simply @auth
     def get(self):
         """
