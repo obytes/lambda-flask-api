@@ -33,7 +33,7 @@ When creating the Lambda Function, make sure that the handler is set to the Adap
 ## Environment variable
 
 - **FIREBASE_APP_API_KEY**: Firebase web application API Key.
-- **AWS_API_GW_MAPPING_KEY**: "flask"
+- **AWS_API_GW_MAPPING_KEY**: The mapping key used in AWS API Gateway to map the API with custom domain.
 - **RUNTIME**: should be `LAMBDA` when deploying to `LAMBDA`
 - **AWS_API_GW_STAGE_NAME**: should be the same as the one used with API Gateway
 - **JWT_AUTHORIZATION_GROUPS_ATTR_NAME**: the JWT claim attribute name from where to get RBAC roles.
