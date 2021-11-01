@@ -40,16 +40,16 @@ When creating the Lambda Function, make sure that the handler is set to the Adap
 
 ## Blueprints
 
-The app is registering a root blueprint for our **`v1`** root resource and 3 sub blueprints.
+The app is registering a root blueprint for our **`v1`** root resource and 4 sub blueprints.
 
-AWS API Gateway sends Requests HTTP Paths that already contains a stage name to Lambda Function and the Flask 
+AWS API Gateway sends Requests HTTP Paths that already contains a stage name to Lambda Function and the Flask
 application will not be able to match the request with the available target routes.
 
-To make sure all blueprints routes include that stage name in their paths, We can just prefix the root blueprint with 
-the API Gateway stage name **`AWS_API_GW_STAGE_NAME`** and all sub blueprints paths will be correctly prefixed.
+To make sure all blueprints routes match the path sent from API Gateway, for each request the adapter will strip the API
+Gateway stage name **`AWS_API_GW_STAGE_NAME`** from the original HTTP Path.
 
-The [Terraform AWS Lambda API](https://github.com/obytes/terraform-aws-lambda-api) reusable modules takes care 
-of this part and will ensure that the same stage name is used for both API Gateway and Lambda Function.
+The [Terraform AWS Lambda API](https://github.com/obytes/terraform-aws-lambda-api) reusable modules will ensure that the
+same stage name is used for both AWS API Gateway and Flask Application so this logic can work.
 
 ## Endpoints
 
