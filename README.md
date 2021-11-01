@@ -30,6 +30,14 @@ This Flask Application is shipped with an adapter that:
 When creating the Lambda Function, make sure that the handler is set to the Adapter Object which is in our case 
 `app.runtime.lambda.main.handler`.
 
+## Environment variable
+
+- **FIREBASE_APP_API_KEY**: Firebase web application API Key.
+- **AWS_API_GW_MAPPING_KEY**: "flask"
+- **RUNTIME**: should be `LAMBDA` when deploying to `LAMBDA`
+- **AWS_API_GW_STAGE_NAME**: should be the same as the one used with API Gateway
+- **JWT_AUTHORIZATION_GROUPS_ATTR_NAME**: the JWT claim attribute name from where to get RBAC roles.
+
 ## Blueprints
 
 The app is registering a root blueprint for our **`v1`** root resource and 3 sub blueprints.
@@ -48,10 +56,14 @@ of this part and will ensure that the same stage name is used for both API Gatew
 To test all use cases we added a public endpoint, a private endpoint and an admin endpoint:
 
 - **Public Endpoint**: simple health check endpoint.
+
+- **Auth Endpoint**: OAuth Password Authentication Flow.
   
 - **Private Endpoint**: `whoami` endpoint that returns to the calling user his JWT decoded claims.
 
 - **Admin Endpoint**: returns to site admins the available Flask routes as a list.
+
+- **Docs Endpoint**: Swagger docs.
 
 ## Authentication & Authorization
 

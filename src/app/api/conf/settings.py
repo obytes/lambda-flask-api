@@ -2,7 +2,7 @@ import os
 
 
 # General
-RUNTIME = os.environ.get("RUNTIME")
+RUNTIME = os.environ.get("RUNTIME", "LAMBDA")
 AWS_REGION = os.environ.get("AWS_REGION", "us-east-1")
 
 # API
